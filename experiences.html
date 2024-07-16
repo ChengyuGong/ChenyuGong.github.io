@@ -38,9 +38,16 @@
             color: white;
             text-decoration: none;
             transition: color 0.3s ease;
+            font-size: 1em; /* 确保字体大小一致 */
         }
         nav ul li a:hover {
             color: #2575fc;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: white;
         }
         .content {
             max-width: 1200px;
@@ -223,10 +230,76 @@
             transform: scale(1.2); /* 放大1.2倍 */
             color: #2575fc; /* 鼠标悬停时变为蓝色 */
         }
+        @media screen and (max-width: 768px) {
+            nav {
+                padding: 0.5em 1em; /* 调整填充以匹配 index.html */
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            nav ul.show {
+                display: flex;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            .menu-toggle {
+                display: block;
+                text-align: right;
+            }
+            .content {
+                margin-top: 60px; /* 调整顶部间距，为固定导航栏留出空间 */
+            }
+            .experience-section {
+                flex-direction: column;
+            }
+            .section-title {
+                width: 100%;
+                padding: 10px;
+                font-size: 1.2em;
+            }
+            .section-content {
+                width: 100%;
+                padding: 10px;
+            }
+            .experience-item {
+                padding: 10px;
+            }
+            .experience-item h3 {
+                font-size: 1.1em;
+            }
+            .experience-item p {
+                font-size: 0.9em;
+            }
+            .tag {
+                font-size: 0.7em;
+            }
+            .timeline::before {
+                left: 20px;
+            }
+            .timeline-item {
+                margin-bottom: 50px;
+            }
+            .timeline-item::after {
+                left: 20px;
+            }
+            .timeline-content {
+                width: calc(100% - 50px);
+                margin-left: 50px;
+                text-align: left !important;
+            }
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 50px;
+            }
+        }
     </style>
 </head>
 <body>
     <nav>
+        <div class="menu-toggle">☰</div>
         <ul>
             <li><a href="index.html#about">About</a></li>
             <li><a href="experiences.html">Experiences</a></li>
@@ -371,7 +444,22 @@
             const sections = document.querySelectorAll('.experience-section');
             const travelToggle = document.querySelector('.travel-toggle');
             const travelContent = document.querySelector('.travel-content');
-    
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navUl = document.querySelector('nav ul');
+        
+            // 导航菜单切换逻辑
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('show');
+            });
+        
+            // 点击导航链接后关闭菜单
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navUl.classList.remove('show');
+                });
+            });
+        
+            // 检查滑动并显示内容
             function checkSlide() {
                 sections.forEach(section => {
                     const slideInAt = (window.scrollY + window.innerHeight) - section.offsetHeight / 2;
@@ -384,13 +472,14 @@
                     }
                 });
             }
-    
+        
             // 初始检查
             setTimeout(checkSlide, 100);
-    
+        
             // 滚动时检查
             window.addEventListener('scroll', checkSlide);
-    
+        
+            // 旅行部分的切换逻辑
             travelToggle.addEventListener('click', () => {
                 travelToggle.classList.toggle('active');
                 travelContent.classList.toggle('active');
@@ -401,7 +490,30 @@
                     }, 300); // 等待内容展开后再滚动
                 }
             });
+        
+            // 添加触摸滑动支持
+            let startY;
+            document.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+            });
+        
+            document.addEventListener('touchmove', (e) => {
+                if (!startY) return;
+                
+                const currentY = e.touches[0].clientY;
+                const diff = startY - currentY;
+        
+                if (diff > 50) {
+                    window.scrollBy(0, 50);
+                } else if (diff < -50) {
+                    window.scrollBy(0, -50);
+                }
+            });
+        
+            document.addEventListener('touchend', () => {
+                startY = null;
+            });
         });
-    </script>
+        </script>
 </body>
 </html>

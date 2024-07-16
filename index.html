@@ -69,6 +69,17 @@
         nav ul li a {
             color: white;
             text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1em; /* 确保字体大小一致 */
+        }
+        nav ul li a:hover {
+            color: #2575fc;
+        }
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: white; /* 确保图标颜色为白色 */
         }
         .banner {
             width: 100%;
@@ -98,15 +109,18 @@
         }
         .about-section {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* 改为 flex-start 使内容靠左对齐 */
+            align-items: flex-start; /* 确保顶部对齐 */
+            gap: 20px; /* 添加间隙，可以根据需要调整 */
         }
         .about-title {
-            flex-basis: 30%;
-            font-size: 1.8em;
+            flex-basis: auto; /* 移除固定宽度 */
+            font-size: 2em; /* 与 Research Experience 相同大小 */
             color: #333;
+            margin-right: 80px; /* 添加右侧间距 */
         }
         .about-content {
-            flex-basis: 65%;
+            flex: 1; /* 让内容占据剩余空间 */
         }
         .social-icons {
             text-align: center;
@@ -321,6 +335,93 @@
             opacity: 1;
             transform: translateY(0);
         }
+        @media screen and (max-width: 768px) {
+            .banner {
+                height: 300px; /* 减小手机上的banner高度 */
+            }
+
+            .content {
+                padding: 1em;
+            }
+
+            .name-title h1 {
+                font-size: 2em;
+            }
+
+            .about-section {
+                flex-direction: column;
+            }
+
+            .about-title, .about-content {
+                flex-basis: 100%;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .education-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .education-image {
+                margin-right: 0;
+                margin-bottom: 1em;
+            }
+
+            .skills-cloud {
+                gap: 10px;
+            }
+
+            .skill-tag {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+
+            .image-gallery {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .image-gallery-wide, .image-gallery-tall {
+                width: 100%;
+                height: 300px; /* 设置固定高度 */
+                margin-bottom: 20px;
+            }
+
+            .gallery-controls {
+                display: none; /* 在移动设备上隐藏控制按钮 */
+            }
+
+            nav {
+                padding: 0.5em 1em; /* 调整填充以匹配 experience.html */
+            }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            nav ul.show {
+                display: flex;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            .menu-toggle {
+                display: block;
+                text-align: right;
+            }
+        }
+
+
+        /* 优化欢迎屏幕在移动设备上的显示 */
+        @media screen and (max-width: 768px) {
+            #welcome-greeting, #welcome-message {
+                font-size: 1.8em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -331,6 +432,7 @@
     </div>
 
     <nav>
+        <div class="menu-toggle">☰</div>
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="experiences.html">Experiences</a></li>
@@ -358,6 +460,13 @@
             </div>
         </div>
 
+        <div class="social-icons">
+            <a href="https://www.linkedin.com/in/kenneth-gong-528580269/" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/ChengyuGong" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/kenneth_.gong/?next=%2F" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+            <a href="https://discord.gg/yourinvitecode" title="Discord" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
+        </div>
+
         <div class="education-section">
             <div class="education-image">
                 <img src="Asset/uwLogo.png" alt="University of Washington Logo">
@@ -370,12 +479,6 @@
             </div>
         </div>
 
-        <div class="social-icons">
-            <a href="https://www.linkedin.com/in/kenneth-gong-528580269/" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-            <a href="https://github.com/ChengyuGong" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-            <a href="https://www.instagram.com/kenneth_.gong/?next=%2F" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-            <a href="https://discord.gg/yourinvitecode" title="Discord" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i></a>
-        </div>
 
         <div class="projects-section">
             <h2>Research Experience</h2>
@@ -462,16 +565,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 导航菜单切换逻辑
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navUl = document.querySelector('nav ul');
+        
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('show');
+            });
+        
+            // 点击导航链接后关闭菜单
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navUl.classList.remove('show');
+                });
+            });
+        
+            // 欢迎屏幕逻辑
             const welcomeScreen = document.getElementById('welcome-screen');
             const welcomeGreeting = document.getElementById('welcome-greeting');
             const welcomeMessage = document.getElementById('welcome-message');
-
-            // 检查是否已经显示过欢迎屏幕
+        
             if (!sessionStorage.getItem('welcomeShown')) {
-                // 显示欢迎屏幕
                 welcomeScreen.style.display = 'flex';
-
-                // 根据时间显示不同的问候语
+        
                 const hour = new Date().getHours();
                 let greetings;
                 if (hour < 2) {
@@ -520,27 +636,22 @@
                         "Night has fallen, it's time to relax!"
                     ];
                 }
-
-
-                // 随机选择一个问候语
+        
                 const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
                 welcomeGreeting.textContent = randomGreeting;
-
-                // 5秒后淡出欢迎界面
+        
                 setTimeout(() => {
                     welcomeScreen.style.opacity = '0';
                     setTimeout(() => {
                         welcomeScreen.style.display = 'none';
                     }, 500);
                 }, 5000);
-
-                // 设置标记，表示已经显示过欢迎屏幕
+        
                 sessionStorage.setItem('welcomeShown', 'true');
             } else {
-                // 如果已经显示过，直接隐藏欢迎屏幕
                 welcomeScreen.style.display = 'none';
             }
-
+        
             // 平滑滚动
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -550,44 +661,14 @@
                     });
                 });
             });
-        });
-        function createSlider(sliderId) {
-            const slider = document.getElementById(sliderId);
-            const container = slider.querySelector('.slider-container');
-            const images = container.querySelectorAll('.slider-image');
-            const nav = slider.querySelector('.slider-nav');
-            let currentIndex = 0;
-
-            // 创建导航点
-            images.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('slider-dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(index));
-                nav.appendChild(dot);
-            });
-
-            function goToSlide(index) {
-                container.style.transform = `translateX(-${index * 100}%)`;
-                currentIndex = index;
-                updateDots();
-            }
-
-            function updateDots() {
-                nav.querySelectorAll('.slider-dot').forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentIndex);
-                });
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
+        
+            // 图片库设置
             function setupGallery(containerClass, imageClass, interval = 5000) {
                 const container = document.querySelector(`.${containerClass}`);
                 const images = container.querySelectorAll(`.${imageClass}`);
                 let currentIndex = 0;
                 let intervalId;
-
-                // 添加控制按钮
+        
                 const controls = document.createElement('div');
                 controls.className = 'gallery-controls';
                 controls.innerHTML = `
@@ -595,71 +676,96 @@
                     <button class="gallery-control next">&gt;</button>
                 `;
                 container.appendChild(controls);
-
-                // 设置初始激活状态
+        
                 images[currentIndex].classList.add('active');
-
+        
                 function showImage(index) {
                     images[currentIndex].classList.remove('active');
                     currentIndex = (index + images.length) % images.length;
                     images[currentIndex].classList.add('active');
                 }
-
+        
                 function nextImage() {
                     showImage(currentIndex + 1);
                 }
-
+        
                 function prevImage() {
                     showImage(currentIndex - 1);
                 }
-
-                // 添加事件监听器
+        
                 controls.querySelector('.prev').addEventListener('click', () => {
                     prevImage();
                     resetInterval();
                 });
-
+        
                 controls.querySelector('.next').addEventListener('click', () => {
                     nextImage();
                     resetInterval();
                 });
-
-                // 自动播放功能
+        
                 function startInterval() {
                     intervalId = setInterval(nextImage, interval);
                 }
-
+        
                 function resetInterval() {
                     clearInterval(intervalId);
                     startInterval();
                 }
-
-                // 鼠标悬停时暂停，移开时继续
+        
                 container.addEventListener('mouseenter', () => clearInterval(intervalId));
                 container.addEventListener('mouseleave', startInterval);
-
-                // 开始自动播放
+        
                 startInterval();
             }
-
-            // 设置左侧和右侧图库
-            setupGallery('image-gallery-wide', 'wide-image', 15000);  // 15秒切换一次
-            setupGallery('image-gallery-tall', 'tall-image', 15000);  // 15秒切换一次
-
-            // 添加滚动检测和动画触发
+        
+            setupGallery('image-gallery-wide', 'wide-image', 15000);
+            setupGallery('image-gallery-tall', 'tall-image', 15000);
+        
+            // 滚动检测和动画触发
             const educationSection = document.querySelector('.education-section');
             
             function checkScroll() {
                 const triggerBottom = window.innerHeight / 5 * 4;
                 const educationTop = educationSection.getBoundingClientRect().top;
-
+        
                 if(educationTop < triggerBottom) {
                     educationSection.classList.add('visible');
                 }
             }
-
+        
             window.addEventListener('scroll', checkScroll);
-            checkScroll(); // 初始检查，以防教育部分在页面加载时就在视图中
+            checkScroll();
+        
+            // 移动设备触摸滑动支持
+            const galleries = document.querySelectorAll('.image-gallery-wide, .image-gallery-tall');
+            
+            galleries.forEach(gallery => {
+                let startX;
+                let isSwiping = false;
+        
+                gallery.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isSwiping = true;
+                });
+        
+                gallery.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+                    const currentX = e.touches[0].clientX;
+                    const diff = startX - currentX;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) {
+                            gallery.querySelector('.gallery-control.next').click();
+                        } else {
+                            gallery.querySelector('.gallery-control.prev').click();
+                        }
+                        isSwiping = false;
+                    }
+                });
+        
+                gallery.addEventListener('touchend', () => {
+                    isSwiping = false;
+                });
+            });
         });
     </script>
 </body>
