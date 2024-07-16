@@ -398,6 +398,12 @@
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
+                        <h3>October 2022</h3>
+                        <p>Double Degree in Mathematics</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
                         <h3>June 2023</h3>
                         <p>Summer Internship: CICC</p>
                     </div>
@@ -405,7 +411,7 @@
                 <div class="timeline-item">
                     <div class="timeline-content">
                         <h3>September 2023</h3>
-                        <p>Double Degree in Mathematics & Joined XXL group</p>
+                        <p>Joined XXL group</p>
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -459,25 +465,10 @@
                 });
             });
         
-            // 检查滑动并显示内容
-            function checkSlide() {
-                sections.forEach(section => {
-                    const slideInAt = (window.scrollY + window.innerHeight) - section.offsetHeight / 2;
-                    const sectionBottom = section.offsetTop + section.offsetHeight;
-                    const isHalfShown = slideInAt > section.offsetTop;
-                    const isNotScrolledPast = window.scrollY < sectionBottom;
-                    
-                    if (isHalfShown && isNotScrolledPast) {
-                        section.classList.add('visible');
-                    }
-                });
-            }
-        
-            // 初始检查
-            setTimeout(checkSlide, 100);
-        
-            // 滚动时检查
-            window.addEventListener('scroll', checkSlide);
+            // 立即显示所有内容
+            sections.forEach(section => {
+                section.classList.add('visible');
+            });
         
             // 旅行部分的切换逻辑
             travelToggle.addEventListener('click', () => {
@@ -514,6 +505,6 @@
                 startY = null;
             });
         });
-        </script>
+    </script>
 </body>
 </html>
