@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiences - Chengyu Gong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #2575fc;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 80px auto 20px;
+            padding: 20px;
+        }
+        .experience-section {
+            display: flex;
+            margin-bottom: 40px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .experience-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section-title {
+            flex-basis: 30%;
+            background-color: #2575fc; /* 默认的蓝色背景 */
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            background-size: cover;
+            background-position: center;
+        }
+        /* Specific background images for each section */
+        .research-title {
+            background-image: url('Asset/research2.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .internship-title {
+            background-image: url('Asset/intership1.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .activity-title {
+            background-image: url('Asset/activity1.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .section-content {
+            flex-basis: 70%;
+            padding: 20px;
+        }
+        .experience-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #2575fc;
+            transition: transform 0.3s ease;
+        }
+        .experience-item:hover {
+            transform: translateX(10px);
+        }
+        .experience-item h3 {
+            color: #2575fc;
+            margin-top: 0;
+        }
+        .experience-item p {
+            margin: 10px 0;
+        }
+        .experience-item .date {
+            font-style: italic;
+            color: #666;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .tag {
+            background-color: #e0e0e0;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+        }
+        .timeline-section {
+            margin-top: 50px;
+            padding: 20px;
+        }
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: #999;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: #000;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover::after {
+            background-color: #2575fc;
+            transform: translateX(-50%) scale(1.2);
+        }
+        .timeline-content {
+            width: 45%;
+            padding: 10px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            text-align: left;
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            text-align: right;
+        }
+        .timeline-item:hover .timeline-content {
+            color: #2575fc;
+        }
+        .travel-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .travel-toggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .travel-toggle.active {
+            transform: rotate(180deg);
+        }
+        .travel-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+            text-align: left;
+            padding: 0 20px;
+        }
+        .travel-content.active {
+            max-height: 1000px;
+            padding: 20px;
+        }
+        .travel-toggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+            color: black; /* 默认颜色 */
+        }
+
+        .travel-toggle:hover {
+            transform: scale(1.2); /* 放大1.2倍 */
+            color: #2575fc; /* 鼠标悬停时变为蓝色 */
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="experiences.html">Experiences</a></li>
+            <li><a href="art.html">Art</a></li>
+            <li><a href="cv.html">CV</a></li>
+            <li><a href="games.html">Games</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+        <!-- Research Section -->
+        <div class="experience-section">
+            <div class="section-title research-title">Research</div>
+            <div class="section-content">
+                <div class="experience-item">
+                    <h3>Experimental Lean Lab (XXL)</h3>
+                    <p>WASHINGTON eXPERIMENTAL MATHEMATICS LAB</p>
+                    <p class="date">Sep 2023 - Mar 2024 · 7 mos</p>
+                    <p>Served as a Research Assistant and Educational Technology Consultant in a project that delved into the Lean programming language, a proof system designed for verifying mathematical proofs and automating technical computations in research</p>
+                    <p>Applied Lean programming to formalize 'Math 300' textbook exercises by Conroy, enriching academic materials. Created a guide for Lean learners and Math 300 students, focusing on Lean's application in mathematical problem solving and proof verificationConducted in depth analysis on the logic presented by the Lean language, ensuring its consistency and rectifying potential inconsistencies</p>
+                    <p>We have made our results into a <a href="https://stevennzzz.github.io/FormalizingMATH300/" target="_blank" rel="noopener noreferrer">public website</a>, which is welcome to beginners interested in learning the LEAN language!</p>
+                    <p>Advisor: Prof. Jarod Alper</p>
+                    <div class="tags">
+                        <span class="tag">LEAN</span>
+                        <span class="tag">Mathematical Proof</span>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <h3>Vector Databases</h3>
+                    <p>High-Performance and Data-Intensive Computing (HPDIC) research lab</p>
+                    <p class="date">Jan 2024 - Present · 7 mos</p>
+                    <p>In my current project, I work with advanced NLP models and various data types, using techniques to embed and process high-dimensional data. I experiment with prompt engineering and fine-tuning to enhance the models' performance.</p>
+                    <p>During data processing, I apply dimensionality reduction methods to optimize data representation and storage, ensuring efficient retrieval. Additionally, I use clustering methods to analyze data patterns and structures. This comprehensive approach has allowed me to gain extensive experience in handling and analyzing complex data.</p>
+                    <p>For a list of HPDIC lab personnel, please click <a href="https://hpdic.github.io/" target="_blank" rel="noopener noreferrer">HERE</a></p>
+                    <p>Advisor: Prof. Dongfang Zhao</p>
+                    <div class="tags">
+                        <span class="tag">Vector Databases</span>
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Multimodality</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Internship Section -->
+        <div class="experience-section">
+            <div class="section-title internship-title">Internship</div>
+            <div class="section-content">
+                <div class="experience-item">
+                    <h3>Investment Analyst -- PE</h3>
+                    <p>China International Capital Corp · Internship</p>
+                    <p class="date">Jul 2023 - Sep 2023 · 3 mos</p>
+                    <p>Conducted extensive research on publicly available data, utilizing resources such as Wind Information and internal documents, to acquire relevant information on investment companies. Analyzed market trends of 30 companies in technology and healthcare sectors by integrating and graphing data for financial analysis, industry trend investigations, and studies on company management and strategy.</p>
+                    <p>Analyzed company status via expert interviews and data, aiding in crafting project evaluations through fundamental analysis.</p>
+                    <p>Analyzed the main business of companies, compared and selected comparable companies, and summarized analytical reports. Participated in the integration of comparable company data, information updates, and value assessment of investment targets.</p>
+                    <div class="tags">
+                        <span class="tag">Fundamental Analysis</span>
+                        <span class="tag">Company Valuation</span>
+                        <span class="tag">Financial Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Activity Section -->
+        <div class="experience-section">
+            <div class="section-title activity-title">Activity</div>
+            <div class="section-content">
+                <div class="experience-item">
+                    <h3>University of Toronto Rotman International Trading Competition</h3>
+                    <p class="date">Feb 2024</p>
+                    <p>Represented the University of Washington in this prestigious international trading competition, where teams from universities worldwide compete in various simulated trading challenges. Our team specialized in volatility arbitrage, automated trading strategies, and commodity markets. We gained valuable hands-on experience in market analysis, risk management, and the application of sophisticated trading algorithms.</p>
+                    <div class="tags">
+                        <span class="tag">Volatility Arbitrage</span>
+                        <span class="tag">Automated Trading</span>
+                        <span the tag">Commodity Markets</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <h2>My Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>October 2021</h3>
+                        <p>Admission to the University of Washington</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>March 2022</h3>
+                        <p>Accepted into the CFRM program</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>June 2023</h3>
+                        <p>Summer Internship: CICC</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>September 2023</h3>
+                        <p>Double Degree in Mathematics & Joined XXL group</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>November 2023</h3>
+                        <p>Joined LLM project under Prof. Leonard Boussioux</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>January-February 2024</h3>
+                        <p>Joined HPDIC lab & RITC competition</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Now</h3>
+                        <p>Continuing my journey...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="travel-section">
+            <p>In addition to the experiences gained from study and work, I believe that the experiences from traveling are also incredibly valuable to my life.</p>
+            <button class="travel-toggle" aria-label="展开旅行经历">&#9660;</button>
+            <div class="travel-content">
+                <h3>我的旅行足迹</h3>
+                <p>别管了 别管了 晚点再写吧</p>
+                <!-- 这里可以添加更多旅行经历 -->
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.experience-section');
+            const travelToggle = document.querySelector('.travel-toggle');
+            const travelContent = document.querySelector('.travel-content');
+    
+            function checkSlide() {
+                sections.forEach(section => {
+                    const slideInAt = (window.scrollY + window.innerHeight) - section.offsetHeight / 2;
+                    const sectionBottom = section.offsetTop + section.offsetHeight;
+                    const isHalfShown = slideInAt > section.offsetTop;
+                    const isNotScrolledPast = window.scrollY < sectionBottom;
+                    
+                    if (isHalfShown && isNotScrolledPast) {
+                        section.classList.add('visible');
+                    }
+                });
+            }
+    
+            // 初始检查
+            setTimeout(checkSlide, 100);
+    
+            // 滚动时检查
+            window.addEventListener('scroll', checkSlide);
+    
+            travelToggle.addEventListener('click', () => {
+                travelToggle.classList.toggle('active');
+                travelContent.classList.toggle('active');
+                
+                if (travelContent.classList.contains('active')) {
+                    setTimeout(() => {
+                        travelContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300); // 等待内容展开后再滚动
+                }
+            });
+        });
+    </script>
+</body>
+</html>
