@@ -38,7 +38,7 @@
             color: white;
             text-decoration: none;
             transition: color 0.3s ease;
-            font-size: 1em; /* 确保字体大小一致 */
+            font-size: 1em;
         }
         nav ul li a:hover {
             color: #2575fc;
@@ -71,7 +71,7 @@
         }
         .section-title {
             flex-basis: 30%;
-            background-color: #2575fc; /* 默认的蓝色背景 */
+            background-color: #2575fc;
             color: white;
             padding: 20px;
             display: flex;
@@ -82,7 +82,6 @@
             background-size: cover;
             background-position: center;
         }
-        /* Specific background images for each section */
         .research-title {
             background-image: url('Asset/research2.png');
             background-size: cover;
@@ -137,7 +136,7 @@
         }
         .timeline-section {
             margin-top: 50px;
-            padding: 20px;
+            padding: 0px;
         }
         .timeline {
             position: relative;
@@ -199,10 +198,15 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
+            color: black;
         }
         .travel-toggle.active {
             transform: rotate(180deg);
+        }
+        .travel-toggle:hover {
+            transform: scale(1.2);
+            color: #2575fc;
         }
         .travel-content {
             max-height: 0;
@@ -217,22 +221,66 @@
             max-height: 1000px;
             padding: 20px;
         }
-        .travel-toggle {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            transition: transform 0.3s ease, color 0.3s ease;
-            color: black; /* 默认颜色 */
+        .paper-list, .website-list {
+            list-style-type: none;
+            padding: 0;
         }
-
-        .travel-toggle:hover {
-            transform: scale(1.2); /* 放大1.2倍 */
-            color: #2575fc; /* 鼠标悬停时变为蓝色 */
+        .paper-list li, .website-list li {
+            margin-bottom: 30px;
+        }
+        .paper-title, .website-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2575fc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        .paper-title:hover, .website-title:hover {
+            color: #1c5cc9;
+        }
+        .paper-authors, .website-creators {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .paper-info, .website-info {
+            font-size: 0.9em;
+            color: #888;
+        }
+        .website-description {
+            color: #333;
+            line-height: 1.6;
+        }
+        .new-sections-container {
+            margin-top: 50px;
+            padding: 20px;
+        }
+        .paper-authors strong,
+        .website-creators strong {
+            font-weight: bold;
+        }
+        .full-width-gray-bg {
+            background-color: #f0f0f0;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            padding: 40px 0;
+        }
+        .full-width-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .full-width-gray-bg h2 {
+            color: #000000;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
         @media screen and (max-width: 768px) {
             nav {
-                padding: 0.5em 1em; /* 调整填充以匹配 index.html */
+                padding: 0.5em 1em;
             }
             nav ul {
                 display: none;
@@ -251,7 +299,7 @@
                 text-align: right;
             }
             .content {
-                margin-top: 60px; /* 调整顶部间距，为固定导航栏留出空间 */
+                margin-top: 60px;
             }
             .experience-section {
                 flex-direction: column;
@@ -277,6 +325,25 @@
             .tag {
                 font-size: 0.7em;
             }
+            .new-sections-container {
+                padding: 20px 10px;
+            }
+            .new-section {
+                padding: 15px;
+            }
+            .new-section h2 {
+                font-size: 1.3em;
+            }
+            .paper-list li, .website-list li {
+                margin-bottom: 20px;
+            }
+            .paper-title, .website-title {
+                font-size: 1.1em;
+            }
+            .paper-authors, .website-creators,
+            .paper-info, .website-info {
+                font-size: 0.85em;
+            }
             .timeline::before {
                 left: 20px;
             }
@@ -293,6 +360,12 @@
             }
             .timeline-item:nth-child(even) .timeline-content {
                 margin-left: 50px;
+            }
+            .full-width-gray-bg {
+                padding: 30px 0;
+            }
+            .full-width-content {
+                padding: 0 15px;
             }
         }
     </style>
@@ -328,9 +401,9 @@
                 <div class="experience-item">
                     <h3>Vector Databases</h3>
                     <p>High-Performance and Data-Intensive Computing (HPDIC) research lab</p>
-                    <p class="date">Jan 2024 - Present · 7 mos</p>
-                    <p>In my current project, I work with advanced NLP models and various data types, using techniques to embed and process high-dimensional data. I experiment with prompt engineering and fine-tuning to enhance the models' performance.</p>
-                    <p>During data processing, I apply dimensionality reduction methods to optimize data representation and storage, ensuring efficient retrieval. Additionally, I use clustering methods to analyze data patterns and structures. This comprehensive approach has allowed me to gain extensive experience in handling and analyzing complex data.</p>
+                    <p class="date">Jan 2024 - Present · 9 mos</p>
+                    <p>In my recent research project, I tackled a critical challenge in scientific data management by developing the Order-Preserving Dimension Reduction (OPDR) method to efficiently process k-nearest neighbors queries in multimodal datasets. This method significantly reduces the dimensionality of embedding vectors while maintaining accurate relational data in a reduced-dimensional space. I successfully formulated a quantitative function that elucidates the correlation between reduced dimensions and other key variables, culminating in a <a href="https://arxiv.org/abs/2408.10264" target="_blank" rel="noopener noreferrer">preprint</a>. Our experiments verified that OPDR effectively manages high-dimensional data, enhancing performance in time-sensitive scientific applications.</p>
+                    <p>Our forthcoming research will concentrate on investigating the applications of Entropic Multimodality in Vector Databases. This innovative research initiative is designed to leverage the principles of Entropic Multimodality to optimize the processing efficiency and precision of vector databases during complex query execution and data interactions.</p>
                     <p>For a list of HPDIC lab personnel, please click <a href="https://hpdic.github.io/" target="_blank" rel="noopener noreferrer">HERE</a></p>
                     <p>Advisor: Prof. Dongfang Zhao</p>
                     <div class="tags">
@@ -342,7 +415,7 @@
                 <div class="experience-item">
                     <h3>Artificial Intelligence in Venture Capital</h3>
                     <p>Advanced Decision-Making Systems Lab</p>
-                    <p class="date">Nov 2023 - Present · 9 mos</p>
+                    <p class="date">Nov 2023 - Present · 11 mos</p>
                     <p>In my current research, I explore how large language models (LLMs) like GPT-3.5 evaluate and generate ideas, focusing on their application in venture capital decision-making. This involves training models on extensive datasets to capture the subtle patterns of successful investment strategies.</p>
                     <p>My project investigates the "thought process" of AI in evaluating the quality of ideas, such as assessing the potential of startup pitches or the effectiveness of business strategies. I employ techniques like prompt engineering and fine-tuning to adapt models to specific contexts, enhancing their decision-making capabilities.</p>
                     <p>Advisor: Prof. Léonard Boussioux</p>
@@ -389,6 +462,36 @@
                         <span class="tag">Automated Trading</span>
                         <span class="tag">Commodity Markets</span>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="full-width-gray-bg">
+            <div class="full-width-content">
+                <!-- Working Papers and Preprints Section -->
+                <div class="new-section">
+                    <h2>Working Papers and Preprints</h2>
+                    <ul class="paper-list">
+                        <li>
+                            <a href="https://arxiv.org/abs/2408.10264" class="paper-title" target="_blank" rel="noopener noreferrer">OPDR: Order-Preserving Dimension Reduction for Semantic Embedding of Multimodal Scientific Data</a>
+                            <p class="paper-authors"><strong>Chengyu Gong</strong>, Gefei Shen, Luanzheng Guo, Nathan Tallent, Dongfang Zhao</p>
+                            <p class="paper-info">Preprint, Under review at <i>Association for the Advancement of Artificial Intelligence (AAAI)</i>, 2024</p>
+                        </li>
+                        <!-- 可以按需添加更多论文 -->
+                    </ul>
+                </div>
+                
+                <!-- Public Website Section -->
+                <div class="new-section">
+                    <h2>Public Website</h2>
+                    <ul class="website-list">
+                        <li>
+                            <a href="https://stevennzzz.github.io/FormalizingMATH300/" class="website-title" target="_blank" rel="noopener noreferrer">Formalizing MATH300: A Lean Journey</a>
+                            <p class="website-creators">Steven Zhong, <strong>Chengyu Gong</strong>, in collaboration with the XXL team</p>
+                            <p class="website-info">Interactive guide, Launched March 2024</p>
+                        </li>
+                        <!-- 可以按需添加更多网站 -->
+                    </ul>
                 </div>
             </div>
         </div>
